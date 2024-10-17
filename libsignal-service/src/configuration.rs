@@ -119,16 +119,16 @@ impl From<&SignalServers> for ServiceConfiguration {
             // configuration with the Signal API staging endpoints
             // see: https://github.com/signalapp/Signal-Desktop/blob/master/config/default.json
             SignalServers::Staging => ServiceConfiguration {
-                service_url: "https://chat.staging.signal.org".parse().unwrap(),
-                storage_url:"https://storage-staging.signal.org".parse().unwrap(),
+                service_url: std::env::var("LOCALHOST").expect("URL does not exist").parse().unwrap(),
+                storage_url: std::env::var("LOCALHOST").expect("URL does not exist").parse().unwrap(),
                 cdn_urls: {
                     let mut map = HashMap::new();
-                    map.insert(0, "https://cdn-staging.signal.org".parse().unwrap());
-                    map.insert(2, "https://cdn2-staging.signal.org".parse().unwrap());
+                    map.insert(0, std::env::var("LOCALHOST").expect("URL does not exist").parse().unwrap());
+                    map.insert(2, std::env::var("LOCALHOST").expect("URL does not exist").parse().unwrap());
                     map
                 },
                 contact_discovery_url:
-                    "https://api-staging.directory.signal.org".parse().unwrap(),
+                std::env::var("LOCALHOST").expect("URL does not exist").parse().unwrap(),
                 certificate_authority: include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/certs/staging-root-ca.pem")).to_string(),
                 unidentified_sender_trust_root:
                     PublicKey::deserialize(&BASE64_RELAXED.decode("BbqY1DzohE4NUZoVF+L18oUPrK3kILllLEJh2UnPSsEx").unwrap()).unwrap(),
@@ -138,15 +138,15 @@ impl From<&SignalServers> for ServiceConfiguration {
             // https://github.com/signalapp/Signal-Desktop/blob/master/config/production.json
             SignalServers::Production => ServiceConfiguration {
                 service_url:
-                    "https://chat.signal.org".parse().unwrap(),
-                storage_url: "https://storage.signal.org".parse().unwrap(),
+                std::env::var("LOCALHOST").expect("URL does not exist").parse().unwrap(),
+                storage_url: std::env::var("LOCALHOST").expect("URL does not exist").parse().unwrap(),
                 cdn_urls: {
                     let mut map = HashMap::new();
-                    map.insert(0, "https://cdn.signal.org".parse().unwrap());
-                    map.insert(2, "https://cdn2.signal.org".parse().unwrap());
+                    map.insert(0, std::env::var("LOCALHOST").expect("URL does not exist").parse().unwrap());
+                    map.insert(2, std::env::var("LOCALHOST").expect("URL does not exist").parse().unwrap());
                     map
                 },
-                contact_discovery_url: "https://api.directory.signal.org".parse().unwrap(),
+                contact_discovery_url: std::env::var("LOCALHOST").expect("URL does not exist").parse().unwrap(),
                 certificate_authority: include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/certs/production-root-ca.pem")).to_string(),
                 unidentified_sender_trust_root:
                     PublicKey::deserialize(&BASE64_RELAXED.decode("BXu6QIKVz5MA8gstzfOgRQGqyLqOwNKHL6INkv3IHWMF").unwrap()).unwrap(),
